@@ -34,6 +34,8 @@ $app->addRoutingMiddleware();
  */
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
+//Arquivo de importação das rotas do projeto, nele, estarão contidas todas as rotas onde a base do LINK deverá ser configurada em App/Config/Config.php
+require "../App/Config/Config.php";
 require "../App/Routes/General.php";
 
 // Run app
