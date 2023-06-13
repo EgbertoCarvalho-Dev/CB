@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\User as ModelUser;
+
 
 class User extends Base
 {
@@ -20,18 +22,32 @@ class User extends Base
 
     public function doLogin(string $email, string $pass)
     {
+
+        //Instanciando a classe App/Models/User para manipular os dados oriundos do banco de dados.
+        $user = new ModelUser();
+
+        $user = $user->where('email', $email)->first();
+
+        //Verifica se há Email cadastrado no banco de dados caso não haja informa FALSO na função.
+        //E verifica se a senha informada no banco é a mesma informada no POST
+        if (is_null($user) || $user->pass != md5($pass)) {
+            return false;
+        }
+
+        //Se ocorreu tudo ok, retorna true na requisição da validação do usuário
+        return true;
     }
 
     //Função que realiza o cadastro de um novo usuário.
 
-    public function doRegister(string $name, string $email, string $pass, int $level)
+    public function doRegister($args)
     {
     }
 
     //função que realiza a atualização do usuário, é necessário informar o ID do usuário para atualizar
     //OBS: É necessário enviar via ARRAY com todas as novas informações do usuário em questão
 
-    public function updateUser(int $id, array $args)
+    public function updateUser(array $args)
     {
     }
 
@@ -39,5 +55,20 @@ class User extends Base
     //Função que pega apenas um usuário se declarado, do contrário exibirá todos os usuários com exceção do usuário que tem a sessão aberta.
     public function getUser()
     {
+    }
+
+    //função que atualiza o usuário
+    public function editUser($args)
+    {
+
+
+        return false;
+    }
+
+    public function deleteUser($id)
+    {
+
+
+        return false;
     }
 }

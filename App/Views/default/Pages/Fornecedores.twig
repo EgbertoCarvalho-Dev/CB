@@ -1,0 +1,140 @@
+{% include "default/Structure/Header.twig" %}
+<h3 class="text-dark mb-1">Fornecedores</h3>
+<div class="row">
+    <div class="col">
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="text-primary fw-bold m-0">Lista</h6>
+                <div class="dropdown no-arrow">
+                    <button class="btn btn-link btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addItem">
+                        <i class="fas fa-plus text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if suppliers|length == 0 %}
+                            <tr>
+                                <td colspan="4">
+                                    Não há fornecedor cadastrado.
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% for supplier in suppliers %}
+                            <tr>
+                                <td>{{ supplier.id }}</td>
+                                <td>{{ supplier.name }}</td>
+                                <td class="text-center">
+                                    <button onclick="editItem('{{ supplier.id }}')" class="btn btn-warning"
+                                        type="button">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ url }}fornecedores/delete/{{ supplier.id }}" class="btn btn-danger"
+                                        type="button">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<form action="{{ url }}fornecedores/add" method="POST" enctype="multipart/form-data">
+    <div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Adicionar Fornecedor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Nome do Fornecedor</label>
+                            <input type="text" class="form-control" name="name" aria-describedby="helpId"
+                                placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form action="{{ url }}fornecedores/edit" method="POST" enctype="multipart/form-data">
+    <div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Editar Fornecedor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="mb-3" id="bodyItem">
+                            <input type="hidden" name="id">
+                            <label for="" class="form-label">Nome do Fornecedor</label>
+                            <input type="text" class="form-control" name="name" id="supplierName"
+                                aria-describedby="helpId" placeholder="">
+                        </div>
+                        <div id="loadItem">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="spinner-border text-primary spinner-border-sm" role="status"
+                                    style="width: 3rem; height: 3rem;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    function editItem(id) {
+
+        $.ajax({
+            url: '{{ url }}fornecedores/get',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            beforeSend: function () {
+                $('#bodyItem').hide();
+                $('#loadItem').show();
+                $('#editItem').modal('show');
+            },
+            success: function (data) {
+                $('input[name="id"]').val(data.id);
+                $('#supplierName').val(data.name);
+                $('#loadItem').fadeOut('normal', function () {
+                    $('#bodyItem').fadeIn('normal');
+                })
+            }
+        })
+    }
+</script>
+{% include "default/Structure/Footer.twig" %}

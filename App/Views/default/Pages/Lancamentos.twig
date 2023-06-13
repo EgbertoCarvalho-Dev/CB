@@ -1,0 +1,126 @@
+{% include "default/Structure/Header.twig" %}
+<h3 class="text-dark mb-1">Lançamentos</h3>
+<div class="row">
+    <div class="col">
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="text-primary fw-bold m-0">Lista</h6>
+                <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
+                        data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                    <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+                        <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item"
+                            href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else
+                            here</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Placa do Veiculo</th>
+                                <th>Fornecedor</th>
+                                <th>Tipo de Carga</th>
+                                <th>Item</th>
+                                <th>Data Pesagem Inicial</th>
+                                <th>Data Pesagem Final</th>
+                                <th>Valor da Nota</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>XXX-XXXX</td>
+                                <td>Fornecedor 1</td>
+                                <td><span class="badge bg-primary">M³</span></td>
+                                <td>Prastico</td>
+                                <td>12/06/23 às 14:05</td>
+                                <td>12/06/23 às 14:05</td>
+                                <td>R$ 100.000,00</td>
+                                <td class="text-center"><button class="btn btn-info" type="button"><i
+                                            class="fas fa-eye"></i></button></td>
+                                <td class="text-center"><button class="btn btn-warning" type="button"><i
+                                            class="fas fa-pencil-alt"></i></button></td>
+                                <td class="text-center"><button class="btn btn-danger" type="button"><i
+                                            class="far fa-trash-alt"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>XXX-XXXX</td>
+                                <td>Fornecedor 1</td>
+                                <td><span class="badge bg-success">KG</span></td>
+                                <td>Prastico</td>
+                                <td>12/06/23 às 14:05</td>
+                                <td>12/06/23 às 14:05</td>
+                                <td>R$ 100.000,00</td>
+                                <td class="text-center"><button class="btn btn-info" type="button"><i
+                                            class="fas fa-eye"></i></button></td>
+                                <td class="text-center"><button class="btn btn-warning" type="button"><i
+                                            class="fas fa-pencil-alt"></i></button></td>
+                                <td class="text-center"><button class="btn btn-danger" type="button"><i
+                                            class="far fa-trash-alt"></i></button></td>
+                            </tr>
+                            <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" tabindex="-1" id="addItem">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Adicionar Lançamento</h4><button class="btn-close" type="button"
+                    aria-label="Close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body"><label class="form-label">Placa do Veiculo</label>
+                <p style="margin-bottom: 5px;"></p>
+                <div class="input-group"><input class="form-control" type="text"></div><label class="form-label"
+                    style="margin-top: 10px;margin-bottom: 0px;">Fornecedor</label>
+                <p style="margin-bottom: 4px;"></p>
+                <div class="input-group"><select class="form-select">
+                        <optgroup label="This is a group">
+                            <option value="12" selected="">This is item 1</option>
+                            <option value="13">This is item 2</option>
+                            <option value="14">This is item 3</option>
+                        </optgroup>
+                    </select></div><label class="form-label">Item</label>
+                <p style="margin-bottom: 5px;"></p>
+                <div class="input-group"><input class="form-control" type="text" style="margin-bottom: 10px;"></div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" href="#">M³</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">KG</a></li>
+                </ul><label class="form-label" style="margin-top: 15px;">Valor da Nota</label>
+                <div class="input-group"><input class="form-control" type="text" readonly=""></div><label
+                    class="form-label" style="margin-top: 15px;">Gestor</label>
+                <div class="input-group"><select class="form-select">
+                        <optgroup label="This is a group">
+                            <option value="12" selected="">This is item 1</option>
+                            <option value="13">This is item 2</option>
+                            <option value="14">This is item 3</option>
+                        </optgroup>
+                    </select></div><label class="form-label" style="margin-top: 15px;">Responsável pelo Setor</label>
+                <div class="input-group"><select class="form-select">
+                        <optgroup label="This is a group">
+                            <option value="12" selected="">This is item 1</option>
+                            <option value="13">This is item 2</option>
+                            <option value="14">This is item 3</option>
+                        </optgroup>
+                    </select></div><label class="form-label" style="margin-top: 15px;">Observação</label>
+                <div class="input-group"><textarea class="form-control"></textarea></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-light" type="button"
+                    data-bs-dismiss="modal">Fechar</button><button class="btn btn-primary" type="button">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "default/Structure/Footer.twig" %}
