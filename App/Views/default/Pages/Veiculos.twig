@@ -37,15 +37,19 @@
                                 <td>{{ car.name }}</td>
                                 <td>{{ car.placa }}</td>
                                 <td class="text-center">
+                                    {% if user_logged.level == 'adm' %}
                                     <button onclick="editItem('{{ car.id }}')" class="btn btn-warning" type="button">
                                         <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    {% endif %}
                                 </td>
                                 <td class="text-center">
+                                    {% if user_logged.level == 'adm' %}
                                     <a href="{{ url }}veiculos/delete/{{ car.id }}" class="btn btn-danger"
                                         type="button">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -143,7 +147,6 @@
                 $('#editItem').modal('show');
             },
             success: function (data) {
-                console.log(data);
                 $('input[name="id"]').val(data.id);
                 $('input[name="placa"]').val(data.placa);
                 $('#carName').val(data.name);

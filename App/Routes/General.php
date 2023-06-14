@@ -10,6 +10,7 @@ use Slim\Routing\RouteCollectorProxy;
 //Página de LOGIN e seus POSTS
 $app->get('/', Pages::class . ":startPage");
 $app->post('/', Pages::class . ":doLogin");
+$app->get('/logout', Pages::class . ":doLogout");
 
 
 //Página do Dashboard e seus POSTS
@@ -49,5 +50,6 @@ $app->group('/lancamentos', function (RouteCollectorProxy $group) {
     $group->post('/add', Pages::class . ":saveEntry");
     $group->post('/get', Pages::class . ":getEntry");
     $group->post('/edit', Pages::class . ":editEntry");
+    $group->get('/print/{ id }', Pages::class . ":printDocument");
     $group->get('/delete/{ id }', Pages::class . ":deleteEntry");
 });

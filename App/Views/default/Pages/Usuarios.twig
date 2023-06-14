@@ -45,9 +45,11 @@
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
+                                    {% if user_logged.level == 'adm' %}
                                     <button onclick="editItem('{{ user.id }}')" class="btn btn-warning" type="button">
                                         <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    {% endif %}
                                 </td>
                                 <td class="text-center">
                                     {% if user_logged.id != user.id %}
@@ -210,7 +212,6 @@
                 $('#editItem').modal('show');
             },
             success: function (data) {
-                console.log(data);
                 $('input[name="id"]').val(data.id);
                 $('#nameEdit').val(data.name);
                 $('#emailEdit').val(data.email);

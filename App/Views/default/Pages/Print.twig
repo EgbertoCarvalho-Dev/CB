@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Impressão de Documento</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <style>
+        body {
+            width: 10cm;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Informações da Pesagem</h4>
+                    </div>
+                    {% set value = entry.attribute.end - entry.attribute.start %}
+                    {% set total = entry.attribute.value * value %}
+                    <div class="card-body">
+                        Nome da Empresa
+                        <br>
+                        {{ entry.created_at }}
+                        <hr>
+                        <h6 class="text-center">CUPOM NÃO FISCAL</h6>
+                        <div class="row">
+                            <div class="col-6 text-end">
+                                <p class="text-muted">
+                                    Data do Lançamento:
+                                    <br>
+                                    ID:
+                                    <br>
+                                    Veiculo:
+                                    <br>
+                                    Fornecedor:
+                                    <br>
+                                    Item:
+                                    <br>
+                                    Valor da Nota:
+                                    <br>
+                                    Gestor:
+                                    <br>
+                                    Responsável:
+                                    <br>
+                                    Data da Pesagem Inicial:
+                                    <br>
+                                    Data da Pesagem Final:
+                                    <br>
+                                    Tipo de Carga:
+                                    <br>
+                                    Observação:
+                                    <br>
+
+                                </p>
+                            </div>
+                            <div class="col-6 fw-semibold">
+                                <p>
+                                    <span id="dateCreated">{{ entry.created_at }}</span>
+                                    <br>
+                                    <span id="idEntry">{{ entry.id }}</span>
+                                    <br>
+                                    <span id="carEntry">{{ entry.car }}</span>
+                                    <br>
+                                    <span id="supplierEntry">{{ entry.supplier }}</span>
+                                    <br>
+                                    <span id="itemEntry">{{ entry.item }}</span>
+                                    <br>
+                                    <span id="valueEntry">R$ {{ total|number_format(2, ',', '.') }}</span>
+                                    <br>
+                                    <span id="managerEntry">{{ entry.manager }}</span>
+                                    <br>
+                                    <span id="responsibleEntry">{{ entry.responsible }}</span>
+                                    <br>
+                                    <span id="startEntry">{{ entry.startpost }}</span>
+                                    <br>
+                                    <span id="finalEntry">{{ entry.endpost }}</span>
+                                    <br>
+                                    <span id="typeEntry">
+                                        {% if entry.type == 'K' %}
+                                        KG
+                                        {% else %}
+                                        M3
+                                        {% endif %}
+                                    </span>
+                                    <br>
+                                    <span id="observation">
+                                        {{ entry.observation }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h6 class="fw-bold">Descrição da Carga</h6>
+                        {% if entry.type == 'K' %}
+                        <div class="row" id="bodyKG">
+                            <div class="col-6">
+                                <p>
+                                    Peso Inicial:
+                                    <br>
+                                    Peso Final:
+                                    <br>
+                                    Peso Liquido:
+                                    <br>
+                                    Valor KG:
+                                </p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <span id="startWeightDetail">{{ entry.attribute.start }} KG</span>
+                                <br>
+                                <span id="endWeightDetail">{{ entry.attribute.end }} KG</span>
+                                <br>
+
+                                <span id="liquidWeightDetail">{{ value }} KG</span>
+                                <br>
+                                <span id="totalValueDetail">
+                                    R$ {{ entry.attribute.value|number_format(2, ',', '.') }}
+                                </span>
+                                <hr>
+
+                                <span id="noteTotalWeightDetail">R$ {{ total|number_format(2, ',', '.')}}</span>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="row" id="bodyMeter">
+                            <div class="col-6">
+                                <p>
+                                    Largura:
+                                    <br>
+                                    Comprimento:
+                                    <br>
+                                    Altura:
+                                    <br>
+                                    Metros Cubicos:
+
+                                </p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <span id="widthDetail">0</span>
+                                <br>
+                                <span id="lengthDetail">0</span>
+                                <br>
+                                <span id="heightDetail">0</span>
+                                <br>
+                                <span id="cubicMetersDetail">0</span>
+                                <hr>
+                                <span id="noteTotalDetail"></span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap JavaScript Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+            </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+            </script>
+</body>
+<script>
+    $(document).ready(function () {
+        window.print();
+    })
+</script>
+
+</html>

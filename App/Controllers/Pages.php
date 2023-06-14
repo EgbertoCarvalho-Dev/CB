@@ -61,8 +61,18 @@ class Pages extends Base
     public function dashboard(Request $request, Response $response)
     {
 
+        $entry = new Entry();
+
+
+        $entries = $entry->getActualEntryMonth();
+
         //Recupera as informações gerais de todas as páginas
         $data = $this->getPagesInfo('Dashboard');
+        $data['actualEntries'] = $entries;
+        $data['totalFature'] = $entry->getTotalFature();
+
+        $data['entries'] = $entry->getEntry();
+        $data['fatureByMonth'] = $entry->fatureByMonth();
 
         return $this->getTwig()->render($response, $this->setView('default/Pages/Dashboard'), $data);
     }
@@ -361,5 +371,60 @@ class Pages extends Base
 
 
         return $response->withHeader('location', URL_HOST . 'lancamentos')->withStatus(301);
+    }
+
+    public function getEntry(Request $request, Response $response)
+    {
+        //Transforma o post em inteiro
+        $id = intval($_POST['id']);
+
+        // instancia o controlador entry
+        $entry = new Entry();
+
+        //chama a função que pega as informações do banco de dados e retorna um array com os valores
+        $entry = $entry->getEntry($id);
+
+        $response->getBody()->write(json_encode($entry));
+
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    }
+
+    public function deleteEntry(Request $request, Response $response, $args)
+    {
+        //instancia o controlador entry
+        $entry = new Entry();
+        //remove o lançamento
+        $entry->deleteEntry($args['id']);
+        //exibe uma mensagem
+        new Alert('success', 'Lançamento removido com sucesso.');
+        //retorna para a página 
+        return $response->withHeader('location', URL_HOST . 'lancamentos')->withStatus(301);
+    }
+
+    public function printDocument(Request $request, Response $response, $args)
+    {
+
+        // instancia o controlador entry
+        $entry = new Entry();
+
+        // pega as informações do lançamento
+        $entry = $entry->getEntry(intval($args['id']));
+
+        //envia as informações do lançamento para a página
+        $data['entry'] = $entry;
+
+
+        //exibe a página
+        return $this->getTwig()->render($response, $this->setView('default/Pages/Print'), $data);
+    }
+
+    public function doLogout(Request $request, Response $response)
+    {
+
+        unset($_SESSION['user']);
+
+        new Alert('success', 'Você saiu do sistema com sucesso.');
+
+        return $response->withHeader('location', URL_HOST)->withStatus(301);
     }
 }

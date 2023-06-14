@@ -119,4 +119,14 @@ class User extends Base
 
         return $user->where('email', $email)->first()->toArray();
     }
+
+    public function doLogout()
+    {
+
+
+
+        session_start();
+
+        unset($_SESSION);
+    }
 }

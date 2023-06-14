@@ -33,16 +33,20 @@
                                 <td>{{ supplier.id }}</td>
                                 <td>{{ supplier.name }}</td>
                                 <td class="text-center">
+                                    {% if user_logged.level == 'adm' %}
                                     <button onclick="editItem('{{ supplier.id }}')" class="btn btn-warning"
                                         type="button">
                                         <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    {% endif %}
                                 </td>
                                 <td class="text-center">
+                                    {% if user_logged.level == 'adm' %}
                                     <a href="{{ url }}fornecedores/delete/{{ supplier.id }}" class="btn btn-danger"
                                         type="button">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}
