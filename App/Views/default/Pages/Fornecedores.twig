@@ -18,6 +18,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nome</th>
+                                <th>CPF/CNPJ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,6 +33,7 @@
                             <tr>
                                 <td>{{ supplier.id }}</td>
                                 <td>{{ supplier.name }}</td>
+                                <td>{{ supplier.cpfcnpj}} </td>
                                 <td class="text-center">
                                     {% if user_logged.level == 'adm' %}
                                     <button onclick="editItem('{{ supplier.id }}')" class="btn btn-warning"
@@ -73,6 +75,11 @@
                             <input type="text" class="form-control" name="name" aria-describedby="helpId"
                                 placeholder="">
                         </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">CPF/CNPJ</label>
+                            <input type="text" class="form-control" name="cpfcnpj" aria-describedby="helpId"
+                                placeholder="">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -98,7 +105,13 @@
                             <label for="" class="form-label">Nome do Fornecedor</label>
                             <input type="text" class="form-control" name="name" id="supplierName"
                                 aria-describedby="helpId" placeholder="">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label">CPF/CNPJ</label>
+                                <input type="text" class="form-control" name="cpfcnpj" id="cpfcnpj"
+                                    aria-describedby="helpId" placeholder="">
+                            </div>
                         </div>
+
                         <div id="loadItem">
                             <div class="d-flex justify-content-center align-items-center">
                                 <div class="spinner-border text-primary spinner-border-sm" role="status"
@@ -132,6 +145,8 @@
                 $('#editItem').modal('show');
             },
             success: function (data) {
+                console.log(data);
+                $('#cpfcnpj').val(data.cpfcnpj);
                 $('input[name="id"]').val(data.id);
                 $('#supplierName').val(data.name);
                 $('#loadItem').fadeOut('normal', function () {
