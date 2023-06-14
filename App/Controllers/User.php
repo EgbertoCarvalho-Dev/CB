@@ -42,6 +42,22 @@ class User extends Base
 
     public function doRegister($args)
     {
+        $args = $args;
+        //Transforma a senha com o hash MD5 para adicionar ao banco de dados
+        $args['pass'] = md5($args['password']);
+
+        //Remove do vetor a chave password2 para não haver conflitos ao salvar no banco
+        unset($args['password2']);
+        unset($args['password']);
+
+        //Instancia a classe Model User para inserção dos dados
+        $user = new ModelUser();
+
+        //Insere no banco os dados informados.
+        $user::create($args);
+
+        // retorna valor da variavel
+        return true;
     }
 
     //função que realiza a atualização do usuário, é necessário informar o ID do usuário para atualizar
@@ -49,26 +65,58 @@ class User extends Base
 
     public function updateUser(array $args)
     {
+        $args = $args;
+
+        if ($args['password'] != "") {
+            //Transforma a senha com o hash MD5 para adicionar ao banco de dados
+            $args['pass'] = md5($args['password']);
+        }
+        //Remove do vetor a chave password2 para não haver conflitos ao salvar no banco
+        unset($args['password2']);
+        unset($args['password']);
+
+        //Instancia a classe Model User para inserção dos dados
+        $user = new ModelUser();
+
+        //Insere no banco os dados informados.
+        $user::where('id', $args['id'])->update($args);
     }
 
 
     //Função que pega apenas um usuário se declarado, do contrário exibirá todos os usuários com exceção do usuário que tem a sessão aberta.
-    public function getUser()
+    public function getUser(int $id = 0)
     {
-    }
+        //Instancia a classe model User para verificar se há usuários
+        $user = new ModelUser();
 
-    //função que atualiza o usuário
-    public function editUser($args)
-    {
+        //verifica se há id informado, do contrário retornará todos os usuários cadastrados
+        if ($id != 0) {
+            $users = $user->findOrFail($id);
+        } else {
+            $users = $user->get();
+        }
 
-
-        return false;
+        return $users->toArray();
     }
 
     public function deleteUser($id)
     {
+        //Instancia o modelo User
+        $user = new ModelUser();
+
+        //deleta as inforamções do banco de dados referente ao ID
+        $user->where('id', $id)->delete();
+
+        return true;
+    }
+
+    public function getUserByEmail($email)
+    {
 
 
-        return false;
+
+        $user = new ModelUser();
+
+        return $user->where('email', $email)->first()->toArray();
     }
 }

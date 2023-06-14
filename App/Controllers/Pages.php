@@ -20,8 +20,9 @@ class Pages extends Base
         //Recupera as informações gerais de todas as páginas
         $data = $this->getPagesInfo('Acessar Sistema');
         //Exibe o email no campo caso tenha erradoa  senha.
-
-        $data['email_user'] = $_SESSION['email_user'];
+        if (isset($_SESSION['email_user'])) {
+            $data['email_user'] = $_SESSION['email_user'];
+        }
 
         return $this->getTwig()->render($response, $this->setView('default/Login'), $data);
     }
@@ -103,6 +104,13 @@ class Pages extends Base
     {
         //Recupera as informações gerais de todas as páginas
         $data = $this->getPagesInfo('Usuários');
+
+        //instancia o controller User
+        $user = new User();
+
+        //chama as informações de todos os usuários
+        $data['users'] = $user->getUser();
+
         return $this->getTwig()->render($response, $this->setView('default/Pages/Usuarios'), $data);
     }
 
@@ -111,6 +119,28 @@ class Pages extends Base
     {
         //Recupera as informações gerais de todas as páginas
         $data = $this->getPagesInfo('Lançamentos');
+
+        //recupera todas as informações do veiculo
+        $car = new Car();
+        $data['cars'] = $car->getCar();
+
+
+        //Recupera todos os fornecedores
+        //Instancia a classe Fornecedor
+        $supplier = new Supplier();
+        //Chama as informações de todos os fornecedores e exibe na página
+        $data['suppliers'] = $supplier->getSupplier();
+
+        //instancia o controller User
+        $user = new User();
+
+        //chama as informações de todos os usuários
+        $data['users'] = $user->getUser();
+
+        $entry = new Entry();
+
+        $data['entries'] = $entry->getEntry();
+
         return $this->getTwig()->render($response, $this->setView('default/Pages/Lancamentos'), $data);
     }
 
@@ -252,12 +282,19 @@ class Pages extends Base
 
         //Instancia o objeto Fornecedor
         $user = new User();
+        //Faz uma segunda checagem se a senhas correspondem
+        if ($_POST['password'] != $_POST['password2']) {
+            new Alert('danger', 'As senhas digitadas não conferem.');
+            //retorna para a página dos fornecedores
+            return $response->withHeader('location', URL_HOST . 'usuarios')->withStatus(301);
+        }
         //Envia para o model as informações e salva no banco de dados
         $user->doRegister($_POST);
 
+        //Exibe alerta que tudo ocorreu bem e foi salvo o usuário
         new Alert('success', 'Usuário salvo com sucesso.');
-        //retorna para a página dos fornecedores
-        return $response->withHeader('location', URL_HOST . 'usuario')->withStatus(301);
+        //retorna para a página dos usuarios
+        return $response->withHeader('location', URL_HOST . 'usuarios')->withStatus(301);
     }
 
     //Função que pega as informações do fornecedor e envia em formato jSON
@@ -290,7 +327,7 @@ class Pages extends Base
         new Alert('success', 'Usuário atualizado com sucesso');
 
         //redireciona para a pagina após a atualização
-        return $response->withHeader('location', URL_HOST . 'usuario')->withStatus(301);
+        return $response->withHeader('location', URL_HOST . 'usuarios')->withStatus(301);
     }
 
     //função que remove o fornecedor
@@ -307,6 +344,22 @@ class Pages extends Base
         new Alert('success', 'Usuário removido com sucesso.');
 
         //redireciona para a pagina após a remoção
-        return $response->withHeader('location', URL_HOST . 'usuario')->withStatus(301);
+        return $response->withHeader('location', URL_HOST . 'usuarios')->withStatus(301);
+    }
+
+
+    public function saveEntry(Request $request, Response $response)
+    {
+
+        //Instancia o controlador dos lancamentos
+        $entry = new Entry();
+        //salva um novo lancamento
+        $entry->saveEntry($_POST);
+
+        //chama um alerta para a entrada
+        new Alert('success', 'Foi feito o lançamento com sucesso.');
+
+
+        return $response->withHeader('location', URL_HOST . 'lancamentos')->withStatus(301);
     }
 }

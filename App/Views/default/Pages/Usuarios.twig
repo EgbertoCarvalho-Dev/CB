@@ -18,7 +18,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nome</th>
-                                <th>Placa</th>
+                                <th>Email</th>
+                                <th>Nivel</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -35,17 +36,28 @@
                             <tr>
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.name }}</td>
-                                <td>{{ user.placa }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% if user.level == 'adm' %}
+                                    <span class="badge bg-danger">Admin</span>
+                                    {% else %}
+                                    <span class="badge bg-primary">Usuário</span>
+                                    {% endif %}
+                                </td>
                                 <td class="text-center">
                                     <button onclick="editItem('{{ user.id }}')" class="btn btn-warning" type="button">
                                         <i class="fas fa-pencil-alt"></i>
                                     </button>
                                 </td>
                                 <td class="text-center">
+                                    {% if user_logged.id != user.id %}
+                                    {% if user_logged.level == 'adm' %}
                                     <a href="{{ url }}usuarios/delete/{{ user.id }}" class="btn btn-danger"
                                         type="button">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
+                                    {% endif %}
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -57,25 +69,43 @@
     </div>
 </div>
 <!-- Modal -->
-<form action="{{ url }}usuários/add" method="POST" enctype="multipart/form-data">
+<form action="{{ url }}usuarios/add" method="POST" enctype="multipart/form-data">
     <div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId">Adicionar Usuario</h5>
+                    <h5 class="modal-title" id="modalTitleId">Adicionar Usuário</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="mb-3">
-                            <label for="" class="form-label">Modelo</label>
+                            <label for="" class="form-label">Nome</label>
                             <input type="text" class="form-control" name="name" aria-describedby="helpId"
                                 placeholder="">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Placa do Usuario</label>
-                            <input type="text" class="form-control" name="placa" id="" aria-describedby="helpId"
+                            <label for="" class="form-label">E-mail</label>
+                            <input type="text" class="form-control" name="email" aria-describedby="helpId"
                                 placeholder="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="level" class="form-label">Nivel</label>
+                            <select class="form-select" name="level">
+                                <option selected>Selecione</option>
+                                <option value="adm">Administrador</option>
+                                <option value="user">Usuário</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Senha</label>
+                            <input type="password" class="form-control" name="password" id="password"
+                                aria-describedby="helpId" placeholder="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Repita a Senha</label>
+                            <input onchange="checkPassword(true)" type="password" class="form-control" name="password2"
+                                id="password2" aria-describedby="helpId" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -87,34 +117,52 @@
         </div>
     </div>
 </form>
-<form action="{{ url }}usuários/edit" method="POST" enctype="multipart/form-data">
+<form action="{{ url }}usuarios/edit" method="POST" enctype="multipart/form-data">
     <div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId">Editar Usuario</h5>
+                    <h5 class="modal-title" id="modalTitleId">Editar Usuário</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <div class="mb-3" id="bodyItem">
-                            <input type="hidden" name="id">
+                        <input type="hidden" name="id">
+                        <div id="bodyItem">
                             <div class="mb-3">
-                                <label for="" class="form-label">Modelo</label>
-                                <input type="text" class="form-control" name="name" id="carName"
+                                <label for="" class="form-label">Nome</label>
+                                <input type="text" class="form-control" name="name" id="nameEdit"
                                     aria-describedby="helpId" placeholder="">
                             </div>
                             <div class="mb-3">
-                                <label for="" class="form-label">Placa do Usuario</label>
-                                <input type="text" class="form-control" name="placa" id="" aria-describedby="helpId"
-                                    placeholder="">
+                                <label for="" class="form-label">E-mail</label>
+                                <input type="text" class="form-control" name="email" id="emailEdit"
+                                    aria-describedby="helpId" placeholder="">
                             </div>
-                            <div id="loadItem">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div class="spinner-border text-primary spinner-border-sm" role="status"
-                                        style="width: 3rem; height: 3rem;">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
+                            <div class="mb-3">
+                                <label for="level" class="form-label">Nivel</label>
+                                <select class="form-select" name="level" id="levelEdit">
+                                    <option selected>Selecione</option>
+                                    <option value="adm">Administrador</option>
+                                    <option value="user">Usuário</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="passwordedit" class="form-label">Senha</label>
+                                <input type="password" class="form-control" name="password" id="passwordedit"
+                                    aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="passwordedit2" class="form-label">Repita a Senha</label>
+                                <input onchange="checkPassword(false)" type="password" class="form-control"
+                                    name="password2" id="passwordedit2" aria-describedby="helpId" placeholder="">
+                            </div>
+                        </div>
+                        <div id="loadItem">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="spinner-border text-primary spinner-border-sm" role="status"
+                                    style="width: 3rem; height: 3rem;">
+                                    <span class="visually-hidden">Loading...</span>
                                 </div>
                             </div>
                         </div>
@@ -129,6 +177,25 @@
     </div>
 </form>
 <script>
+    function checkPassword(type) {
+        if (type == true) {
+            if ($('#password').val() != $('#password2').val()) {
+                $('#password').val('');
+                $('#password2').val('');
+                alert('As senhas informadas não conferem, por favor verifique-as e tente novamente.');
+                $('#password').focus();
+            }
+        } else {
+            if ($('#passwordedit').val() != $('#passwordedit2').val()) {
+                $('#passwordedit').val('');
+                $('#passwordedit2').val('');
+                alert('As senhas informadas não conferem, por favor verifique-as e tente novamente.');
+                $('#passwordedit').focus();
+            }
+
+        }
+    }
+
     function editItem(id) {
 
         $.ajax({
@@ -145,8 +212,9 @@
             success: function (data) {
                 console.log(data);
                 $('input[name="id"]').val(data.id);
-                $('input[name="placa"]').val(data.placa);
-                $('#carName').val(data.name);
+                $('#nameEdit').val(data.name);
+                $('#emailEdit').val(data.email);
+                $('#levelEdit').val(data.level);
                 $('#loadItem').fadeOut('normal', function () {
                     $('#bodyItem').fadeIn('normal');
                 })

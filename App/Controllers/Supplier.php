@@ -11,9 +11,6 @@ use App\Controllers\Base;
 class Supplier extends Base
 {
 
-    // Atributos da classe Supplier (Fornecedor)
-    private int $id;
-    private string $name;
 
     //Função que salva um novo fornecedor no banco de dados.
     public function saveSupplier($post)

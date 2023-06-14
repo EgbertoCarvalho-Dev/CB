@@ -5,15 +5,9 @@
         <div class="card shadow mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="text-primary fw-bold m-0">Lista</h6>
-                <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
-                        data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                    <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                        <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item"
-                            href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else
-                            here</a>
-                    </div>
-                </div>
+                <button class="btn btn-link btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addItem">
+                    <i class="fas fa-plus text-gray-400"></i>
+                </button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -34,39 +28,48 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% if entries|length == 0%}
                             <tr>
-                                <td>1</td>
-                                <td>XXX-XXXX</td>
-                                <td>Fornecedor 1</td>
-                                <td><span class="badge bg-primary">M³</span></td>
-                                <td>Prastico</td>
-                                <td>12/06/23 às 14:05</td>
-                                <td>12/06/23 às 14:05</td>
-                                <td>R$ 100.000,00</td>
-                                <td class="text-center"><button class="btn btn-info" type="button"><i
-                                            class="fas fa-eye"></i></button></td>
-                                <td class="text-center"><button class="btn btn-warning" type="button"><i
-                                            class="fas fa-pencil-alt"></i></button></td>
-                                <td class="text-center"><button class="btn btn-danger" type="button"><i
-                                            class="far fa-trash-alt"></i></button></td>
+                                <td colspan="6">Não lançamento cadastrado neste momento.</td>
                             </tr>
+                            {% endif %}
+                            {% for entry in entries %}
                             <tr>
-                                <td>1</td>
-                                <td>XXX-XXXX</td>
-                                <td>Fornecedor 1</td>
-                                <td><span class="badge bg-success">KG</span></td>
-                                <td>Prastico</td>
-                                <td>12/06/23 às 14:05</td>
-                                <td>12/06/23 às 14:05</td>
-                                <td>R$ 100.000,00</td>
-                                <td class="text-center"><button class="btn btn-info" type="button"><i
-                                            class="fas fa-eye"></i></button></td>
-                                <td class="text-center"><button class="btn btn-warning" type="button"><i
-                                            class="fas fa-pencil-alt"></i></button></td>
-                                <td class="text-center"><button class="btn btn-danger" type="button"><i
-                                            class="far fa-trash-alt"></i></button></td>
+                                <td>{{ entry.id }}</td>
+                                <td>{{ entry.car }}</td>
+                                <td>{{ entry.supplier }}</td>
+                                <td>
+                                    {% if entry.type == 'M' %}
+                                    <span class="badge bg-primary">M³</span>
+                                    {% else %}
+                                    <span class="badge bg-success">KG</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ entry.item }}</td>
+                                <td>
+                                    {{entry.startpost|date('d/m/Y H:m')}}
+                                </td>
+                                <td>
+                                    {{entry.endpost|date('d/m/Y H:m')}}
+                                </td>
+                                <td>R$ {{ entry.total|number_format(2, '.', ',')}}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-info" type="button">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-warning" type="button">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger" type="button">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </td>
                             </tr>
-                            <tr></tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -74,53 +77,261 @@
         </div>
     </div>
 </div>
-<div class="modal fade" role="dialog" tabindex="-1" id="addItem">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Adicionar Lançamento</h4><button class="btn-close" type="button"
-                    aria-label="Close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body"><label class="form-label">Placa do Veiculo</label>
-                <p style="margin-bottom: 5px;"></p>
-                <div class="input-group"><input class="form-control" type="text"></div><label class="form-label"
-                    style="margin-top: 10px;margin-bottom: 0px;">Fornecedor</label>
-                <p style="margin-bottom: 4px;"></p>
-                <div class="input-group"><select class="form-select">
-                        <optgroup label="This is a group">
-                            <option value="12" selected="">This is item 1</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
-                        </optgroup>
-                    </select></div><label class="form-label">Item</label>
-                <p style="margin-bottom: 5px;"></p>
-                <div class="input-group"><input class="form-control" type="text" style="margin-bottom: 10px;"></div>
-                <ul class="nav nav-tabs">
-                    <li class="nav-item"><a class="nav-link active" href="#">M³</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">KG</a></li>
-                </ul><label class="form-label" style="margin-top: 15px;">Valor da Nota</label>
-                <div class="input-group"><input class="form-control" type="text" readonly=""></div><label
-                    class="form-label" style="margin-top: 15px;">Gestor</label>
-                <div class="input-group"><select class="form-select">
-                        <optgroup label="This is a group">
-                            <option value="12" selected="">This is item 1</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
-                        </optgroup>
-                    </select></div><label class="form-label" style="margin-top: 15px;">Responsável pelo Setor</label>
-                <div class="input-group"><select class="form-select">
-                        <optgroup label="This is a group">
-                            <option value="12" selected="">This is item 1</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
-                        </optgroup>
-                    </select></div><label class="form-label" style="margin-top: 15px;">Observação</label>
-                <div class="input-group"><textarea class="form-control"></textarea></div>
-            </div>
-            <div class="modal-footer"><button class="btn btn-light" type="button"
-                    data-bs-dismiss="modal">Fechar</button><button class="btn btn-primary" type="button">Salvar</button>
+<form action="{{ url }}lancamentos/add" enctype="multipart/form-data" method="POST">
+    <div class="modal fade" role="dialog" tabindex="-1" id="addItem">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        Adicionar Lançamento
+                    </h4>
+                    <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Veiculo</label>
+                        <select class="form-select" name="car">
+                            <option selected>Selecionar</option>
+                            {% for car in cars %}
+                            <option value="{{ car.id }}">{{ car.name }} - {{ car.placa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <p style="margin-bottom: 4px;"></p>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Fornecedor</label>
+                        <select class="form-select" name="supplier">
+                            <option selected>Selecionar</option>
+                            {% for supplier in suppliers %}
+                            <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <label class="form-label">Item</label>
+                    <p style="margin-bottom: 5px;"></p>
+                    <div class="input-group">
+                        <input name="item" class="form-control" type="text" style="margin-bottom: 10px;">
+                    </div>
+                    <label for="" class="form-label">Tipo de Carga</label>
+                    <div class="card shadow">
+
+                        <div class="card-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                        aria-selected="true">M³</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                        data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
+                                        aria-selected="false">KG</button>
+                                </li>
+
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Largura</label>
+                                        <input oninput="onChangeMeter()" value="0" type="text"
+                                            class="meters form-control" name="meter[width]" id="widthInput"
+                                            aria-describedby="helpId" placeholder="">
+                                        <small id="helpId" class="form-text text-muted">Em Metros</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Comprimento</label>
+                                        <input oninput="onChangeMeter()" value="0" type="text"
+                                            class="meters form-control" name="meter[length]" id="lengthInput"
+                                            aria-describedby="helpId" placeholder="">
+                                        <small id="helpId" class="form-text text-muted">Em Metros</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Altura</label>
+                                        <input oninput="onChangeMeter()" value="0" type="text"
+                                            class="meters form-control" name="meter[height]" id="heightInput"
+                                            aria-describedby="helpId" placeholder="">
+                                        <small id="helpId" class="form-text text-muted">Em Metros</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Valor Metro Cúbico</label>
+                                        <input oninput="inputMeterValue(this.value);" value="0" type="text"
+                                            class="meters form-control" name="meter[cubic]" id="valueInputMeter"
+                                            aria-describedby="helpId" placeholder="">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p>
+                                                Largura:
+                                                <br>
+                                                Comprimento:
+                                                <br>
+                                                Altura:
+                                                <br>
+                                                Metros Cubicos:
+
+                                            </p>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <span id="width">0</span>
+                                            <br>
+                                            <span id="length">0</span>
+                                            <br>
+                                            <span id="height">0</span>
+                                            <br>
+                                            <span id="cubicMeters">0</span>
+                                            <hr>
+                                            <span id="noteTotal"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Peso Inicial</label>
+                                        <input type="text" value="0" oninput="updateWeightPrice()" class="form-control"
+                                            name="weight[start]" id="startWeightInput" aria-describedby="helpId"
+                                            placeholder="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Peso Final</label>
+                                        <input type="text" value="0" oninput="updateWeightPrice()" class="form-control"
+                                            name="weight[end]" id="endWeightInput" aria-describedby="helpId"
+                                            placeholder="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Valor KG</label>
+                                        <input type="text" value="0" oninput="updateWeightPrice()" class="form-control"
+                                            name="weight[value]" id="valueWeightInput" aria-describedby="helpId"
+                                            placeholder="">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p>
+                                                Peso Inicial:
+                                                <br>
+                                                Peso Final:
+                                                <br>
+                                                Peso Liquido:
+                                                <br>
+                                                Valor KG:
+                                            </p>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <span id="startWeight">0</span>
+                                            <br>
+                                            <span id="endWeight">0</span>
+                                            <br>
+                                            <span id="liquidWeight">0</span>
+                                            <br>
+                                            <span id="totalValue">0</span>
+                                            <hr>
+                                            <span id="noteTotalWeight"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <label class="form-label" style="margin-top: 15px;">
+                        Valor da Nota
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" type="text" name="total" id="noteValue">
+                    </div>
+                    <label class="form-label" style="margin-top: 15px;">
+                        Gestor
+                    </label>
+                    <div class="input-group">
+                        <select class="form-select" name="manager">
+                            <option value="0" selected="">Selecione</option>
+                            {% for user in users %}
+                            <option value="{{ user.id }}">{{ user.name }} - {{ user.email }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <label class="form-label" style="margin-top: 15px;">
+                        Responsável pelo Setor
+                    </label>
+                    <div class="input-group">
+                        <select class="form-select" name="responsible">
+                            <option value="0" selected="">Selecione</option>
+                            {% for user in users %}
+                            <option value="{{ user.id }}">{{ user.name }} - {{ user.email }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="" class="form-label">Data Pesagem Inicial</label>
+                        <input type="datetime-local" class="form-control" name="startpost" aria-describedby="helpId"
+                            placeholder="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Data Pesagem Final</label>
+                        <input type="datetime-local" class="form-control" name="endpost" aria-describedby="helpId"
+                            placeholder="">
+                    </div>
+                    <label class="form-label" style="margin-top: 15px;">
+                        Observação
+                    </label>
+                    <div class="input-group">
+                        <textarea class="form-control" name="observation"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" type="button" data-bs-dismiss="modal">
+                        Fechar
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        Salvar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+<script>
+
+    function onChangeMeter() {
+        let width = $('#widthInput').val();
+        let length = $('#lengthInput').val();
+        let height = $('#heightInput').val();
+
+        $('#width').html(width);
+        $('#length').html(length);
+        $('#height').html(height);
+
+        $('#cubicMeters').html((width * length * height));
+        inputMeterValue($('#valueInputMeter').val());
+    }
+    function inputMeterValue(value) {
+        let price = $('#cubicMeters').html() * value;
+        $('#noteValue').val(price);
+        price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
+        $('#noteTotal').html(price);
+    }
+    function updateWeightPrice() {
+        let startWeight = $('#startWeightInput').val();
+        let endWeight = $('#endWeightInput').val();
+        let valueInput = $('#valueWeightInput').val();
+        let liquidWeight = endWeight - startWeight;
+
+
+        $('#startWeight').html(startWeight);
+        $('#endWeight').html(endWeight);
+        $('#totalValue').html(valueInput);
+        $('#liquidWeight').html(liquidWeight);
+
+        let price = liquidWeight * valueInput;
+        $('#noteValue').val(price);
+        price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
+        $('#noteTotalWeight').html(price);
+    }
+</script>
 {% include "default/Structure/Footer.twig" %}

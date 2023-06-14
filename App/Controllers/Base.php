@@ -26,6 +26,12 @@ abstract class Base
 
         $data['msg'] = Alert::showMsg();
 
+        if (isset($_SESSION['user'])) {
+            $user = new User();
+            $data['user_logged'] = $user->getUserByEmail($_SESSION['user']['email']);
+        }
+
+
         //URL base que é configurado no arquivo App/Config/Config.php
         $data['url'] = URL_HOST;
 

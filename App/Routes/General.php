@@ -36,7 +36,18 @@ $app->group('/veiculos', function (RouteCollectorProxy $group) {
 });
 
 // Rota dos usuários e seus POSTS
-$app->get('/usuarios', Pages::class . ":usuario");
-
-//Rota dos lançamentos e seus POSTS
-$app->get('/lancamentos', Pages::class . ":lancamento");
+$app->group('/usuarios', function (RouteCollectorProxy $group) {
+    $group->get('[/]', Pages::class . ":usuario");
+    $group->post('/add', Pages::class . ":saveUser");
+    $group->post('/get', Pages::class . ":getUser");
+    $group->post('/edit', Pages::class . ":editUser");
+    $group->get('/delete/{ id }', Pages::class . ":deleteUser");
+});
+// Rota dos usuários e seus POSTS
+$app->group('/lancamentos', function (RouteCollectorProxy $group) {
+    $group->get('[/]', Pages::class . ":lancamento");
+    $group->post('/add', Pages::class . ":saveEntry");
+    $group->post('/get', Pages::class . ":getEntry");
+    $group->post('/edit', Pages::class . ":editEntry");
+    $group->get('/delete/{ id }', Pages::class . ":deleteEntry");
+});
