@@ -10,9 +10,9 @@ class Entry
     // Função que salva um novo lançamento
     public function saveEntry(array $args)
     {
-        print_r($args);
+
         //verifica se foi setado a carga por metros cubicos ou se foi por peso
-        if (!$args['meter']['width'] != '' && $args['meter']['length'] != '' && $args['meter']['height'] != '' && $args['meter']['cubic'] != '') {
+        if ($args['typeWeight'] == 'M') {
             $type = 'M';
             $attributes = json_encode($args['meter']);
         } else {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Jun-2023 às 19:20
+-- Tempo de geração: 17-Jun-2023 às 14:47
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 8.2.0
 
@@ -70,7 +70,8 @@ CREATE TABLE `entries` (
 --
 
 INSERT INTO `entries` (`id`, `car`, `supplier`, `startpost`, `endpost`, `item`, `total`, `manager`, `responsible`, `observation`, `type`, `attribute`, `created_at`, `updated_at`) VALUES
-(3, 4, 5, '2023-06-13 21:40:00', '2023-06-16 21:40:00', 'Plastico', 13500, 1, 1, 'LOREM IPSUM', 'K', '{\"start\":\"150\",\"end\":\"1500\",\"value\":\"10\"}', '2023-06-14 02:42:25', '2023-06-14 02:42:25');
+(1, 4, 10, '2023-06-17 09:36:00', '2023-06-23 09:37:00', 'PLASTICO', 111, 1, 5, 'gsagsagsa', 'M', '{\"width\":\"12\",\"length\":\"123\",\"height\":\"123\",\"cubic\":\"123\"}', '2023-06-17 14:37:46', '2023-06-17 14:37:46'),
+(2, 4, 10, '2023-06-19 09:38:00', '2023-06-27 09:38:00', 'Arroz', 3888, 1, 5, 'dfdssdgfsdgds', 'K', '{\"start\":\"12\",\"end\":\"120\",\"value\":\"36\"}', '2023-06-17 14:38:26', '2023-06-17 14:38:26');
 
 -- --------------------------------------------------------
 
@@ -82,6 +83,11 @@ CREATE TABLE `suppliers` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `cpfcnpj` varchar(20) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `uf` varchar(30) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `tel` varchar(30) NOT NULL,
+  `observation` text NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -90,10 +96,8 @@ CREATE TABLE `suppliers` (
 -- Extraindo dados da tabela `suppliers`
 --
 
-INSERT INTO `suppliers` (`id`, `name`, `cpfcnpj`, `created_at`, `updated_at`) VALUES
-(5, 'HP Fornecedor', '', '2023-06-13 05:18:29', '2023-06-13 05:18:29'),
-(7, 'FORNECEDOR 1', '', '2023-06-14 19:13:32', '2023-06-14 19:13:32'),
-(8, 'TESTE', '123456', '2023-06-14 19:17:26', '2023-06-14 19:17:26');
+INSERT INTO `suppliers` (`id`, `name`, `cpfcnpj`, `address`, `uf`, `city`, `tel`, `observation`, `created_at`, `updated_at`) VALUES
+(10, 'Testes', '123', '123', '12321', '12312', '12312', '2132132122', '2023-06-17 14:10:59', '2023-06-17 14:35:52');
 
 -- --------------------------------------------------------
 
@@ -161,13 +165,13 @@ ALTER TABLE `cars`
 -- AUTO_INCREMENT de tabela `entries`
 --
 ALTER TABLE `entries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `users`

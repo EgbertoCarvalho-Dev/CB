@@ -19,6 +19,11 @@
                                 <th>#</th>
                                 <th>Nome</th>
                                 <th>CPF/CNPJ</th>
+                                <th>Endereço</th>
+                                <th>Cidade</th>
+                                <th>Estado</th>
+                                <th>Telefone</th>
+                                <th>Observação</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +39,11 @@
                                 <td>{{ supplier.id }}</td>
                                 <td>{{ supplier.name }}</td>
                                 <td>{{ supplier.cpfcnpj}} </td>
+                                <td>{{ supplier.address}}</td>
+                                <td>{{ supplier.city}}</td>
+                                <td>{{ supplier.uf }}</td>
+                                <td>{{ supplier.tel }}</td>
+                                <td>{{ supplier.observation }}</td>
                                 <td class="text-center">
                                     {% if user_logged.level == 'adm' %}
                                     <button onclick="editItem('{{ supplier.id }}')" class="btn btn-warning"
@@ -80,6 +90,29 @@
                             <input type="text" class="form-control" name="cpfcnpj" aria-describedby="helpId"
                                 placeholder="">
                         </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Endereço</label>
+                            <input type="text" class="form-control" name="address" aria-describedby="helpId"
+                                placeholder="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">UF</label>
+                            <input type="text" class="form-control" name="uf" aria-describedby="helpId" placeholder="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" name="city" aria-describedby="helpId"
+                                placeholder="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Telefone</label>
+                            <input type="text" class="form-control" name="tel" aria-describedby="helpId" placeholder="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Observação</label>
+                            <input type="text" class="form-control" name="observation" aria-describedby="helpId"
+                                placeholder="">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -108,6 +141,31 @@
                             <div class="mb-3 mt-3">
                                 <label for="" class="form-label">CPF/CNPJ</label>
                                 <input type="text" class="form-control" name="cpfcnpj" id="cpfcnpj"
+                                    aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" name="address" id="address"
+                                    aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">UF</label>
+                                <input type="text" class="form-control" name="uf" id="uf" aria-describedby="helpId"
+                                    placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Cidade</label>
+                                <input type="text" class="form-control" name="city" id="city" aria-describedby="helpId"
+                                    placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" name="tel" id="tel" aria-describedby="helpId"
+                                    placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Observação</label>
+                                <input type="text" class="form-control" name="observation" id="observation"
                                     aria-describedby="helpId" placeholder="">
                             </div>
                         </div>
@@ -147,6 +205,11 @@
             success: function (data) {
                 console.log(data);
                 $('#cpfcnpj').val(data.cpfcnpj);
+                $('#address').val(data.address);
+                $('#uf').val(data.uf);
+                $('#city').val(data.city);
+                $('#tel').val(data.tel);
+                $('#observation').val(data.observation);
                 $('input[name="id"]').val(data.id);
                 $('#supplierName').val(data.name);
                 $('#loadItem').fadeOut('normal', function () {

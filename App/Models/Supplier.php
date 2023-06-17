@@ -8,6 +8,6 @@ class Supplier extends Model
 {
 
     protected $fillable = [
-        'name', 'cpfcnpj', 'created_at', 'updated_at'
+        'name', 'cpfcnpj', 'address', 'uf', 'city', 'tel', 'observation', 'created_at', 'updated_at'
     ];
 }

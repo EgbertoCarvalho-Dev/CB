@@ -340,128 +340,119 @@
                         <input name="item" class="form-control" type="text" style="margin-bottom: 10px;">
                     </div>
                     <label for="" class="form-label">Tipo de Carga</label>
-                    <div class="card shadow">
+                    <div class="card shadow p-3">
+                        <h6>Selecione o tipo de carga</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="selectWeight(this.value)" value="M" type="radio"
+                                name="typeWeight">
+                            <label class="form-check-label" for="">
+                                M³
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" value="K" onchange="selectWeight(this.value)" type="radio"
+                                name="typeWeight">
+                            <label class="form-check-label" for="">
+                                KG
+                            </label>
+                        </div>
 
-                        <div class="card-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                        data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                        aria-selected="true">M³</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                        data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                                        aria-selected="false">KG</button>
-                                </li>
+                        <div id="meterWeight" class="weightDetails" style="display: none;">
+                            <hr>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Largura</label>
+                                <input oninput="onChangeMeter('Add')" value="0" type="text" class="meters form-control"
+                                    name="meter[width]" id="widthInputAdd" aria-describedby="helpId" placeholder="">
+                                <small id="helpId" class="form-text text-muted">Em Metros</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Comprimento</label>
+                                <input oninput="onChangeMeter('Add')" value="0" type="text" class="meters form-control"
+                                    name="meter[length]" id="lengthInputAdd" aria-describedby="helpId" placeholder="">
+                                <small id="helpId" class="form-text text-muted">Em Metros</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Altura</label>
+                                <input oninput="onChangeMeter('Add')" value="0" type="text" class="meters form-control"
+                                    name="meter[height]" id="heightInputAdd" aria-describedby="helpId" placeholder="">
+                                <small id="helpId" class="form-text text-muted">Em Metros</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Valor Metro Cúbico</label>
+                                <input oninput="inputMeterValue(this.value, 'Add');" value="0" type="text"
+                                    class="meters form-control" name="meter[cubic]" id="valueInputMeterAdd"
+                                    aria-describedby="helpId" placeholder="">
+                            </div>
 
-                            </ul>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>
+                                        Largura:
+                                        <br>
+                                        Comprimento:
+                                        <br>
+                                        Altura:
+                                        <br>
+                                        Metros Cubicos:
 
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Largura</label>
-                                        <input oninput="onChangeMeter()" value="0" type="text"
-                                            class="meters form-control" name="meter[width]" id="widthInput"
-                                            aria-describedby="helpId" placeholder="">
-                                        <small id="helpId" class="form-text text-muted">Em Metros</small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Comprimento</label>
-                                        <input oninput="onChangeMeter()" value="0" type="text"
-                                            class="meters form-control" name="meter[length]" id="lengthInput"
-                                            aria-describedby="helpId" placeholder="">
-                                        <small id="helpId" class="form-text text-muted">Em Metros</small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Altura</label>
-                                        <input oninput="onChangeMeter()" value="0" type="text"
-                                            class="meters form-control" name="meter[height]" id="heightInput"
-                                            aria-describedby="helpId" placeholder="">
-                                        <small id="helpId" class="form-text text-muted">Em Metros</small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Valor Metro Cúbico</label>
-                                        <input oninput="inputMeterValue(this.value);" value="0" type="text"
-                                            class="meters form-control" name="meter[cubic]" id="valueInputMeter"
-                                            aria-describedby="helpId" placeholder="">
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p>
-                                                Largura:
-                                                <br>
-                                                Comprimento:
-                                                <br>
-                                                Altura:
-                                                <br>
-                                                Metros Cubicos:
-
-                                            </p>
-                                        </div>
-                                        <div class="col-6 text-center">
-                                            <span id="width">0</span>
-                                            <br>
-                                            <span id="length">0</span>
-                                            <br>
-                                            <span id="height">0</span>
-                                            <br>
-                                            <span id="cubicMeters">0</span>
-                                            <hr>
-                                            <span id="noteTotal"></span>
-                                        </div>
-                                    </div>
+                                    </p>
                                 </div>
-                                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Peso Inicial</label>
-                                        <input type="text" value="0" oninput="updateWeightPrice()" class="form-control"
-                                            name="weight[start]" id="startWeightInput" aria-describedby="helpId"
-                                            placeholder="">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Peso Final</label>
-                                        <input type="text" value="0" oninput="updateWeightPrice()" class="form-control"
-                                            name="weight[end]" id="endWeightInput" aria-describedby="helpId"
-                                            placeholder="">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Valor KG</label>
-                                        <input type="text" value="0" oninput="updateWeightPrice()" class="form-control"
-                                            name="weight[value]" id="valueWeightInput" aria-describedby="helpId"
-                                            placeholder="">
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p>
-                                                Peso Inicial:
-                                                <br>
-                                                Peso Final:
-                                                <br>
-                                                Peso Liquido:
-                                                <br>
-                                                Valor KG:
-                                            </p>
-                                        </div>
-                                        <div class="col-6 text-center">
-                                            <span id="startWeight">0</span>
-                                            <br>
-                                            <span id="endWeight">0</span>
-                                            <br>
-                                            <span id="liquidWeight">0</span>
-                                            <br>
-                                            <span id="totalValue">0</span>
-                                            <hr>
-                                            <span id="noteTotalWeight"></span>
-                                        </div>
-                                    </div>
+                                <div class="col-6 text-center">
+                                    <span id="widthAdd">0</span>
+                                    <br>
+                                    <span id="lengthAdd">0</span>
+                                    <br>
+                                    <span id="heightAdd">0</span>
+                                    <br>
+                                    <span id="cubicMetersAdd">0</span>
+                                    <hr>
+                                    <span id="noteTotalAdd"></span>
                                 </div>
+                            </div>
+                        </div>
+                        <div id="kiloWeight" class="weightDetails" style="display: none;">
+                            <hr>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Peso Inicial</label>
+                                <input type="text" value="0" oninput="updateWeightPrice('Add')" class="form-control"
+                                    name="weight[start]" id="startWeightInputAdd" aria-describedby="helpId"
+                                    placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Peso Final</label>
+                                <input type="text" value="0" oninput="updateWeightPrice('Add')" class="form-control"
+                                    name="weight[end]" id="endWeightInputAdd" aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Valor KG</label>
+                                <input type="text" value="0" oninput="updateWeightPrice('Add')" class="form-control"
+                                    name="weight[value]" id="valueWeightInputAdd" aria-describedby="helpId"
+                                    placeholder="">
+                            </div>
 
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>
+                                        Peso Inicial:
+                                        <br>
+                                        Peso Final:
+                                        <br>
+                                        Peso Liquido:
+                                        <br>
+                                        Valor KG:
+                                    </p>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <span id="startWeightAdd">0</span>
+                                    <br>
+                                    <span id="endWeightAdd">0</span>
+                                    <br>
+                                    <span id="liquidWeightAdd">0</span>
+                                    <br>
+                                    <span id="totalValueAdd">0</span>
+                                    <hr>
+                                    <span id="noteTotalWeightAdd"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -469,7 +460,7 @@
                         Valor da Nota
                     </label>
                     <div class="input-group">
-                        <input class="form-control" type="text" name="total" id="noteValue">
+                        <input class="form-control" type="text" name="total" id="noteValueAdd">
                     </div>
                     <label class="form-label" style="margin-top: 15px;">
                         Gestor
@@ -662,7 +653,6 @@
 
 <script>
     function showDetailsEntry(id) {
-
         $.ajax({
             url: '{{ url }}lancamentos/get',
             method: 'POST',
@@ -677,6 +667,7 @@
                 $('#showDetail').modal('show');
             },
             success: function (data) {
+                console.log(data);
                 $('#btnPrint').attr('onclick', 'printDocument("' + data.id + '")');
                 let price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(data.total);
                 $('#idEntry').html(data.id);
@@ -703,6 +694,12 @@
 
                     type = '<span class="badge bg-success">KG</span>';
                 } else {
+                    $('#widthDetail').html(data.attribute.width);
+                    $('#lengthDetail').html(data.attribute.length);
+                    $('#heightDetail').html(data.attribute.height);
+                    $('#cubicMetersDetail').html(data.attribute.cubic);
+                    let valueNote = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(data.total);
+                    $('#noteTotalDetail').html(valueNote);
                     $('#bodyMeter').fadeIn('normal');
                     type = '<span class="badge bg-primary">M³</span>';
 
@@ -772,40 +769,52 @@
             }
         })
     }
-    function onChangeMeter() {
-        let width = $('#widthInput').val();
-        let length = $('#lengthInput').val();
-        let height = $('#heightInput').val();
+    function onChangeMeter(type) {
+        let width = $('#widthInput' + type).val();
+        let length = $('#lengthInput' + type).val();
+        let height = $('#heightInput' + type).val();
 
-        $('#width').html(width);
-        $('#length').html(length);
-        $('#height').html(height);
+        $('#width' + type).html(width);
+        $('#length' + type).html(length);
+        $('#height' + type).html(height);
 
-        $('#cubicMeters').html((width * length * height));
-        inputMeterValue($('#valueInputMeter').val());
+        $('#cubicMeters' + type).html((width * length * height));
+        inputMeterValue($('#valueInputMeter' + type).val());
     }
-    function inputMeterValue(value) {
-        let price = $('#cubicMeters').html() * value;
-        $('#noteValue').val(price);
+    function inputMeterValue(value, type) {
+        let price = $('#cubicMeters' + type).html() * value;
+        $('#noteValue' + type).val(price);
         price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
-        $('#noteTotal').html(price);
+        $('#noteTotal' + type).html(price);
     }
-    function updateWeightPrice() {
-        let startWeight = $('#startWeightInput').val();
-        let endWeight = $('#endWeightInput').val();
-        let valueInput = $('#valueWeightInput').val();
+    function updateWeightPrice(type) {
+        let startWeight = $('#startWeightInput' + type).val();
+        let endWeight = $('#endWeightInput' + type).val();
+        let valueInput = $('#valueWeightInput' + type).val();
         let liquidWeight = endWeight - startWeight;
 
 
-        $('#startWeight').html(startWeight);
-        $('#endWeight').html(endWeight);
-        $('#totalValue').html(valueInput);
-        $('#liquidWeight').html(liquidWeight);
+        $('#startWeight' + type).html(startWeight);
+        $('#endWeight' + type).html(endWeight);
+        $('#totalValue' + type).html(valueInput);
+        $('#liquidWeight' + type).html(liquidWeight);
 
         let price = liquidWeight * valueInput;
-        $('#noteValue').val(price);
+        $('#noteValue' + type).val(price);
         price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
-        $('#noteTotalWeight').html(price);
+        $('#noteTotalWeight' + type).html(price);
+    }
+</script>
+<script>
+    function selectWeight(value) {
+        $('.weightDetails').slideUp('normal', function () {
+
+            if (value == 'K') {
+                $('#kiloWeight').slideDown('normal');
+            } else {
+                $('#meterWeight').slideDown('normal');
+            }
+        })
     }
 </script>
 {% include "default/Structure/Footer.twig" %}
