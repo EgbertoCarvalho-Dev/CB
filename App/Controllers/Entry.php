@@ -61,14 +61,16 @@ class Entry
             $user = $userOb->getUser($entries['responsible']);
 
 
+            $date = new \DateTime($entries['created_at']);
+            $date = $date->sub(new \DateInterval('PT3H'))->format('Y-m-d H:i:s');
             // pega as informações do vetor ITERADO e atualiza o vetor PRINCIPAL
+            $entries['created_at'] = $date;
+            $entries['updated_at'] = $date;
             $entries['manager'] = $user['name'];
             $entries['car'] = $car['placa'];
             $entries['responsible'] = $user['name'];
             $entries['attribute'] = (array) json_decode($entries['attribute']);
             $entries['supplier'] = $supplier['name'];
-            $date = new \DateTime($entries['created_at']);
-            $entries['created_at'] = $date->format('Y-m-d H:i:s');
         } else {
             $entry = $entry->get();
             // transforma todos os objetos em array

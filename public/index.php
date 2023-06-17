@@ -1,10 +1,11 @@
 <?php
 
+use Slim\Factory\AppFactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
+
 
 /**
  * Instantiate App
@@ -37,6 +38,10 @@ $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 //Arquivo de importação das rotas do projeto, nele, estarão contidas todas as rotas onde a base do LINK deverá ser configurada em App/Config/Config.php
 require "../App/Config/Config.php";
 require "../App/Routes/General.php";
+
+
+date_default_timezone_set("America/Sao_Paulo");
+//echo date_default_timezone_get();
 
 // Run app
 $app->run();

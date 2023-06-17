@@ -550,7 +550,7 @@
                         <p>
                             <span id="dateCreated"></span>
                             <br>
-                            <span id="idEntry"></span>
+                            <span id="idEntryHtml"></span>
                             <br>
                             <span id="carEntry"></span>
                             <br>
@@ -661,7 +661,8 @@
                 console.log(data);
                 $('#btnPrint').attr('onclick', 'printDocument("' + data.id + '")');
                 let price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(data.total);
-                $('#idEntry').html(data.id);
+                $('#idEntry').val(data.id);
+                $('#idEntryHtml').html(data.id);
                 $('#carEntry').html(data.car);
                 $('#supplierEntry').html(data.supplier);
                 $('#itemEntry').html(data.item);
