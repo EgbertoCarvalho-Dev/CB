@@ -1,0 +1,25 @@
+- Atualizações 
+TELA CADASTRO DE FORNECEDORES:
+Nome
+CPF/CNPJ
+Endereço
+UF
+Cidade
+Telefone
+Observação
+
+- Atualização e Correção de cálculos automático:
+TELA KG:
+Peso Inicial:  
+Peso Final:
+Peso Liquido: Peso Inicial - Peso Final
+Valor KG: 
+Valor da Nota: Peso Liquido * Valor KG
+
+TELA M³:
+Largura:  
+Comprimento:
+Altura: 
+Metros Cúbicos: Largura * Comprimento * Altura 
+Valor Metro Cubico: 
+Valor da Nota: Metros Cúbicos * Valor Metro Cubico
