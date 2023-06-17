@@ -15,7 +15,7 @@
     <style>
         body {
             width: 10cm;
-            font-size: 10px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -28,8 +28,7 @@
                     <div class="card-header">
                         <h4 class="text-center">Informações da Pesagem</h4>
                     </div>
-                    {% set value = entry.attribute.end - entry.attribute.start %}
-                    {% set total = entry.attribute.value * value %}
+
                     <div class="card-body">
                         Nome da Empresa
                         <br>
@@ -78,7 +77,7 @@
                                     <br>
                                     <span id="itemEntry">{{ entry.item }}</span>
                                     <br>
-                                    <span id="valueEntry">R$ {{ total|number_format(2, ',', '.') }}</span>
+                                    <span id="valueEntry">R$ {{ entry.total|number_format(2, ',', '.') }}</span>
                                     <br>
                                     <span id="managerEntry">{{ entry.manager }}</span>
                                     <br>
@@ -105,6 +104,8 @@
                         <hr>
                         <h6 class="fw-bold">Descrição da Carga</h6>
                         {% if entry.type == 'K' %}
+                        {% set value = entry.attribute.end - entry.attribute.start %}
+                        {% set total = entry.attribute.value * value %}
                         <div class="row" id="bodyKG">
                             <div class="col-6">
                                 <p>
@@ -148,15 +149,15 @@
                                 </p>
                             </div>
                             <div class="col-6 text-center">
-                                <span id="widthDetail">0</span>
+                                <span id="widthDetail">{{ entry.attribute.width }}</span>
                                 <br>
-                                <span id="lengthDetail">0</span>
+                                <span id="lengthDetail">{{ entry.attribute.length }}</span>
                                 <br>
-                                <span id="heightDetail">0</span>
+                                <span id="heightDetail">{{ entry.attribute.height }}</span>
                                 <br>
-                                <span id="cubicMetersDetail">0</span>
+                                <span id="cubicMetersDetail">{{ entry.attribute.cubic }}</span>
                                 <hr>
-                                <span id="noteTotalDetail"></span>
+                                <span id="noteTotalDetail">R$ {{ entry.total|number_format(2, ',', '.')}}</span>
                             </div>
                         </div>
                         {% endif %}

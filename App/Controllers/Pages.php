@@ -389,6 +389,16 @@ class Pages extends Base
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
+    public function editEntry(Request $request, Response $response)
+    {
+        $entry = new Entry();
+
+        $entry = $entry->updateEntry($_POST);
+
+        new Alert('success', 'Lançamento atualizado com sucesso.');
+        return $response->withHeader('location', URL_HOST . 'lancamentos')->withStatus(301);
+    }
+
     public function deleteEntry(Request $request, Response $response, $args)
     {
         //instancia o controlador entry

@@ -24,6 +24,7 @@ class Entry
         $args['attribute'] = $attributes;
         unset($args['meter']);
         unset($args['weight']);
+        unset($args['typeWeight']);
 
         $entry = new ModelEntry();
         $entry::create($args);
@@ -113,6 +114,27 @@ class Entry
     //função que atualiza uma entrada
     public function updateEntry(array $args)
     {
+
+        $entry = new ModelEntry();
+
+        //verifica se foi setado a carga por metros cubicos ou se foi por peso
+        if ($args['typeWeight'] == 'M') {
+            $type = 'M';
+            $attributes = json_encode($args['meter']);
+        } else {
+            $type = 'K';
+            $attributes = json_encode($args['weight']);
+        }
+
+        $args['type'] = $type;
+        $args['attribute'] = $attributes;
+        unset($args['meter']);
+        unset($args['weight']);
+        unset($args['typeWeight']);
+
+
+
+        $entry->where('id', $args['id'])->update($args);
     }
     //função que deleta uma entrada
     public function deleteEntry(int $id)
