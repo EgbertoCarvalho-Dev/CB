@@ -423,6 +423,8 @@ class Pages extends Base
         //envia as informações do lançamento para a página
         $data['entry'] = $entry;
 
+        $data['url'] = URL_HOST;
+
 
         //exibe a página
         return $this->getTwig()->render($response, $this->setView('default/Pages/Print'), $data);
